@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentacion", "Presentacion\Presentacion.csproj", "{3F23772B-FA57-4B0F-9058-DE79F652F518}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio-TP", "Dominio-TP\Dominio-TP.csproj", "{247E9142-CE8A-4689-B6C0-25522B319DFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{8F0C82A1-7F93-48ED-B8BA-20EF1AA901C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F23772B-FA57-4B0F-9058-DE79F652F518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F23772B-FA57-4B0F-9058-DE79F652F518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F23772B-FA57-4B0F-9058-DE79F652F518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F23772B-FA57-4B0F-9058-DE79F652F518}.Release|Any CPU.Build.0 = Release|Any CPU
+		{247E9142-CE8A-4689-B6C0-25522B319DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{247E9142-CE8A-4689-B6C0-25522B319DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{247E9142-CE8A-4689-B6C0-25522B319DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{247E9142-CE8A-4689-B6C0-25522B319DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F0C82A1-7F93-48ED-B8BA-20EF1AA901C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F0C82A1-7F93-48ED-B8BA-20EF1AA901C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F0C82A1-7F93-48ED-B8BA-20EF1AA901C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F0C82A1-7F93-48ED-B8BA-20EF1AA901C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
