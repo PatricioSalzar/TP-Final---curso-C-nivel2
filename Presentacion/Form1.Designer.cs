@@ -53,13 +53,13 @@
             this.dgvArticulo.Name = "dgvArticulo";
             this.dgvArticulo.RowHeadersWidth = 51;
             this.dgvArticulo.RowTemplate.Height = 24;
-            this.dgvArticulo.Size = new System.Drawing.Size(625, 301);
+            this.dgvArticulo.Size = new System.Drawing.Size(800, 301);
             this.dgvArticulo.TabIndex = 0;
             this.dgvArticulo.SelectionChanged += new System.EventHandler(this.dgvArticulo_SelectionChanged);
             // 
             // pbArticulo
             // 
-            this.pbArticulo.Location = new System.Drawing.Point(661, 69);
+            this.pbArticulo.Location = new System.Drawing.Point(836, 69);
             this.pbArticulo.Name = "pbArticulo";
             this.pbArticulo.Size = new System.Drawing.Size(340, 301);
             this.pbArticulo.TabIndex = 1;
