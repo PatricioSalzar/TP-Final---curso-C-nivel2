@@ -27,6 +27,7 @@ namespace Presentacion
             try
             {
                 LIstaArticulo = negocio.listar();
+
                 dgvArticulo.DataSource = LIstaArticulo;
                 ocultarColumnas();
                 cargarImagen(LIstaArticulo[0].Imagen);
@@ -43,8 +44,8 @@ namespace Presentacion
         {
             dgvArticulo.Columns["Imagen"].Visible = false;
             dgvArticulo.Columns["Id"].Visible = false;
-            dgvArticulo.Columns["Marca_articulo"].Visible = false;
-            dgvArticulo.Columns["Categoria_articulo"].Visible = false;
+            //dgvArticulo.Columns["Marca_articulo"].Visible = false;
+            //dgvArticulo.Columns["Categoria_articulo"].Visible = false;
         }
 
         private void cargarImagen(string url)
@@ -93,12 +94,24 @@ namespace Presentacion
             }
         }
 
+        private List<Marca> listaMarcas;
+        private List<Categoria> listaCategortia;
+
         private void ventan_tp_Load(object sender, EventArgs e)
         {
             cargar();
             cbocampo.Items.Add("Nombre");
             cbocampo.Items.Add("Descripcion");
             cbocampo.Items.Add("Precio");
+            cbocampo.Items.Add("Marca");
+            cbocampo.Items.Add("Categoria");
+
+            MarcaNegocio marcanegocio = new MarcaNegocio();
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+
+            listaMarcas = marcanegocio.listar();
+            listaCategortia = categoriaNegocio.listarCategoria();
+
         }
 
         private void dgvArticulo_SelectionChanged(object sender, EventArgs e)
@@ -182,6 +195,7 @@ namespace Presentacion
         private void cbocampo_SelectedIndexChanged(object sender, EventArgs e)
         {
             string opcion = cbocampo.SelectedItem.ToString();
+            cbocriterio.DataSource = null;
             cbocriterio.Items.Clear();
 
             if (opcion == "Precio")
@@ -189,6 +203,24 @@ namespace Presentacion
                 cbocriterio.Items.Add("Mayor a");
                 cbocriterio.Items.Add("Menor a");
                 cbocriterio.Items.Add("Igual a");
+            }
+            else if(opcion == "Categoria")
+            {
+                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                cbocriterio.DataSource = categoriaNegocio.listarCategoria(); // asumimos que retorna List<Categoria>
+                cbocriterio.DisplayMember = "Descripcion";
+                cbocriterio.ValueMember = "Id_categoria";
+                txtfiltroavanzado.Visible = false;
+                cbocriterio.Visible = true;
+            }
+            else if(opcion == "Marca")
+            {
+                MarcaNegocio marcanegocio = new MarcaNegocio();
+                cbocriterio.DataSource = marcanegocio.listar(); // asumimos que retorna List<Categoria>
+                cbocriterio.DisplayMember = "Descripcion";
+                cbocriterio.ValueMember = "Id_marca";
+                txtfiltroavanzado.Visible = false;
+                cbocriterio.Visible = true;
             }
             else
             {
@@ -254,7 +286,35 @@ namespace Presentacion
                 string criterio = cbocriterio.SelectedItem.ToString();
                 string filtro = txtfiltroavanzado.Text;
 
+                if (campo == "Marca" || campo == "Categoria")
+                {
+                    criterio = ""; // no se usa en este caso
+                    filtro = cbocriterio.SelectedValue?.ToString(); // usa el ID
+
+                    // Validación por si está vacío
+                    if (string.IsNullOrEmpty(filtro))
+                    {
+                        MessageBox.Show("Debe seleccionar una marca o categoría válida.");
+                        return;
+                    }
+                    filtro = criterio;
+                    dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
+                }
+                else
+                {
+                    criterio = cbocriterio.SelectedItem?.ToString();
+                    filtro = txtfiltroavanzado.Text;
+
+                    // Validación por si se deja vacío el campo de texto
+                    if (string.IsNullOrEmpty(criterio) || string.IsNullOrEmpty(filtro))
+                    {
+                        MessageBox.Show("Debe ingresar un filtro válido.");
+                        return;
+                    }
+                }
+
                 dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
+
             }
             catch (Exception ex)
             {

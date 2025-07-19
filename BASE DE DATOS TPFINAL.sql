@@ -93,3 +93,4 @@ select Id, Descripcion from MARCAS
 select Id, Descripcion from CATEGORIAS
 
 select Codigo, Nombre, A.Descripcion, ImagenUrl, M.Descripcion Marca_articulo, C.Descripcion Categoria_articulo, A.IdMarca, A.IdCategoria, A.Id, Precio from ARTICULOS A, MARCAS M, CATEGORIAS C where M.Id = A.IdMarca and C.Id = A.IdCategoria
+

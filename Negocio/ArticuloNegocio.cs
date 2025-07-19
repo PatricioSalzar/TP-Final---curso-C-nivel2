@@ -20,7 +20,7 @@ namespace Negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=CATALOGO_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "select Id, Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio from ARTICULOS";
+                comando.CommandText = "SELECT A.Id, Codigo, A.Nombre, A.Descripcion, ImagenUrl, Precio, M.Id AS IdMarca, M.Descripcion AS MarcaDescripcion, C.Id AS IdCategoria, C.Descripcion AS CategoriaDescripcion FROM ARTICULOS A JOIN MARCAS M ON M.Id = A.IdMarca JOIN CATEGORIAS C ON C.Id = A.IdCategoria";
                 comando.Connection = conexion;
                 conexion.Open();
                 lector = comando.ExecuteReader();
@@ -38,9 +38,11 @@ namespace Negocio
                     }
                     aux.Marca_articulo = new Marca();
                     aux.Marca_articulo.Id_marca = (int)lector["IdMarca"];
+                    aux.Marca_articulo.Descripcion = (string)lector["MarcaDescripcion"].ToString();
+
                     aux.Categoria_articulo = new Categoria();
                     aux.Categoria_articulo.Id_categoria = (int)lector["IdCategoria"];
-                    ///FIJARME QUE EN LA CONSULRA NO ME ESTOY TRAYENDO EL NOMBRE DE LA MARCA NI DE LA CATEGORIA, CORREGIRLO.me tendria que traer la desrcripcion
+                    aux.Categoria_articulo.Descripcion = (string)lector["CategoriaDescripcion"].ToString();
                     lista.Add(aux);
                 }
                 conexion.Close();
@@ -163,6 +165,14 @@ namespace Negocio
                             break;
                     }
                 }
+                else if (campo == "Marca")
+                {
+                    consulta += "A.IdMarca = '" + filtro + "'";
+                }
+                else if(campo == "Categoria")
+                {
+                    consulta += "A.IdCategoria = '" + filtro + "'";
+                }
                 else
                 {
                     switch (criterio)
@@ -187,7 +197,7 @@ namespace Negocio
                     aux.CodArt = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
-                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Precio = (decimal)datos.Lector["Precios"];
 
                     if (!(datos.Lector["ImagenUrl"] is DBNull))
                         aux.Imagen = (string)datos.Lector["ImagenUrl"];
