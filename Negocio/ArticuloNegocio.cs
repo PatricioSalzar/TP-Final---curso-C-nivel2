@@ -128,6 +128,56 @@ namespace Negocio
 
         ///no hice la funcion de baja logica por que la clase articula no tiene un variable que represente su estado (alto-baja/true-false)
        
+        ///tendria que hacer una fincion que filtre especificamente para filtrar marma y categoria(string campo, string criterio)
+
+        public List<Articulo> FiltrarMarcaCategoria (string campo, string criterio)
+        {
+            List<Articulo> lista = new List<Articulo>();
+            AccesoDatos datos = new AccesoDatos();
+            string consulta2 = "";
+            try
+            {
+                if (campo == "Marca")
+                {
+                    consulta2 = "select Codigo,Nombre,A.Descripcion,M.Descripcion Marca, C.Descripcion Categoria, A.IdMarca, A.IdCategoria, Precio, ImagenUrl, A.Id from CATEGORIAS as C, ARTICULOS as A INNER JOIN MARCAS as M ON a.IdMarca = m.Id where M.Descripcion = ";
+                    consulta2 += "'" + criterio + "'";
+                }
+                else if(campo == "Categoria")
+                {
+                    consulta2 = "select Codigo,Nombre,A.Descripcion,M.Descripcion Marca, C.Descripcion Categoria, A.IdMarca, A.IdCategoria, Precio, ImagenUrl, A.Id from MARCAS as M, ARTICULOS as A INNER JOIN CATEGORIAS as C ON a.IdCategoria = c.Id  where C.Descripcion = ";
+                    consulta2 += "'"+ criterio +"'";
+                }
+                datos.setearConsulta(consulta2);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Articulo aux = new Articulo();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.CodArt = (string)datos.Lector["Codigo"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
+
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                        aux.Imagen = (string)datos.Lector["ImagenUrl"];
+
+                    aux.Marca_articulo = new Marca();
+                    aux.Marca_articulo.Id_marca = (int)datos.Lector["IdMarca"];
+                    aux.Marca_articulo.Descripcion = (string)datos.Lector["Marca"];
+                    aux.Categoria_articulo = new Categoria();
+                    aux.Categoria_articulo.Id_categoria = (int)datos.Lector["IdCategoria"];
+                    aux.Categoria_articulo.Descripcion = (string)datos.Lector["Categoria"];
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public List<Articulo> filtrar(string campo, string criterio, string filtro)
         {
             List<Articulo> lista = new List<Articulo>();
