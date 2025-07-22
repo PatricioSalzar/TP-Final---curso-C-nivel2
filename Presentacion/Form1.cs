@@ -288,32 +288,30 @@ namespace Presentacion
 
                 if (campo == "Marca" || campo == "Categoria")
                 {
-                    criterio = ""; // no se usa en este caso
-                    filtro = cbocriterio.SelectedValue?.ToString(); // usa el ID
+                    criterio = ""; // no se usa
+                    filtro = cbocriterio.SelectedValue.ToString(); // importante
 
-                    // Validación por si está vacío
                     if (string.IsNullOrEmpty(filtro))
                     {
                         MessageBox.Show("Debe seleccionar una marca o categoría válida.");
                         return;
                     }
-                    filtro = criterio;
-                    dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
+
+                    dgvArticulo.DataSource = negocio.FiltrarMarcaCategoria(campo, filtro);
                 }
                 else
                 {
-                    criterio = cbocriterio.SelectedItem?.ToString();
-                    filtro = txtfiltroavanzado.Text;
-
-                    // Validación por si se deja vacío el campo de texto
-                    if (string.IsNullOrEmpty(criterio) || string.IsNullOrEmpty(filtro))
+                    if (string.IsNullOrEmpty(txtfiltroavanzado.Text) || cbocriterio.SelectedItem == null)
                     {
                         MessageBox.Show("Debe ingresar un filtro válido.");
                         return;
                     }
+
+                    criterio = cbocriterio.SelectedItem.ToString();
+                    filtro = txtfiltroavanzado.Text;
+                    dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
                 }
 
-                dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
 
             }
             catch (Exception ex)
