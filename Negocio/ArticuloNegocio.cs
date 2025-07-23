@@ -215,14 +215,6 @@ namespace Negocio
                             break;
                     }
                 }
-                else if (campo == "Marca")
-                {
-                    consulta += "A.IdMarca = '" + filtro + "'";
-                }
-                else if(campo == "Categoria")
-                {
-                    consulta += "A.IdCategoria = '" + filtro + "'";
-                }
                 else
                 {
                     switch (criterio)
