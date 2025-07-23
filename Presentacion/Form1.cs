@@ -258,7 +258,7 @@ namespace Presentacion
                 string campo = cbocampo.SelectedItem.ToString();
                 string criterio = cbocriterio.SelectedItem.ToString();
                 string filtro = txtfiltroavanzado.Text;
-          
+                
                 dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
 
             }
