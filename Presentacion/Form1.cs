@@ -103,14 +103,6 @@ namespace Presentacion
             cbocampo.Items.Add("Nombre");
             cbocampo.Items.Add("Descripcion");
             cbocampo.Items.Add("Precio");
-            cbocampo.Items.Add("Marca");
-            cbocampo.Items.Add("Categoria");
-
-            MarcaNegocio marcanegocio = new MarcaNegocio();
-            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-
-            listaMarcas = marcanegocio.listar();
-            listaCategortia = categoriaNegocio.listarCategoria();
 
         }
 
@@ -195,35 +187,16 @@ namespace Presentacion
         private void cbocampo_SelectedIndexChanged(object sender, EventArgs e)
         {
             string opcion = cbocampo.SelectedItem.ToString();
-            cbocriterio.DataSource = null;
-            cbocriterio.Items.Clear();
-
             if (opcion == "Precio")
             {
+                cbocriterio.Items.Clear();
                 cbocriterio.Items.Add("Mayor a");
                 cbocriterio.Items.Add("Menor a");
                 cbocriterio.Items.Add("Igual a");
             }
-            else if(opcion == "Categoria")
-            {
-                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-                cbocriterio.DataSource = categoriaNegocio.listarCategoria(); // asumimos que retorna List<Categoria>
-                cbocriterio.DisplayMember = "Descripcion";
-                cbocriterio.ValueMember = "Id_categoria";
-                txtfiltroavanzado.Visible = false;
-                cbocriterio.Visible = true;
-            }
-            else if(opcion == "Marca")
-            {
-                MarcaNegocio marcanegocio = new MarcaNegocio();
-                cbocriterio.DataSource = marcanegocio.listar(); // asumimos que retorna List<Categoria>
-                cbocriterio.DisplayMember = "Descripcion";
-                cbocriterio.ValueMember = "Id_marca";
-                txtfiltroavanzado.Visible = false;
-                cbocriterio.Visible = true;
-            }
             else
             {
+                cbocriterio.Items.Clear();
                 cbocriterio.Items.Add("Comienza con");
                 cbocriterio.Items.Add("Termina con");
                 cbocriterio.Items.Add("Contiene");
@@ -285,34 +258,7 @@ namespace Presentacion
                 string campo = cbocampo.SelectedItem.ToString();
                 string criterio = cbocriterio.SelectedItem.ToString();
                 string filtro = txtfiltroavanzado.Text;
-
-                if (campo == "Marca" || campo == "Categoria")
-                {
-                    criterio = ""; // no se usa en este caso
-                    filtro = cbocriterio.SelectedValue?.ToString(); // usa el ID
-
-                    // Validación por si está vacío
-                    if (string.IsNullOrEmpty(filtro))
-                    {
-                        MessageBox.Show("Debe seleccionar una marca o categoría válida.");
-                        return;
-                    }
-                    filtro = criterio;
-                    dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
-                }
-                else
-                {
-                    criterio = cbocriterio.SelectedItem?.ToString();
-                    filtro = txtfiltroavanzado.Text;
-
-                    // Validación por si se deja vacío el campo de texto
-                    if (string.IsNullOrEmpty(criterio) || string.IsNullOrEmpty(filtro))
-                    {
-                        MessageBox.Show("Debe ingresar un filtro válido.");
-                        return;
-                    }
-                }
-
+          
                 dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
 
             }
