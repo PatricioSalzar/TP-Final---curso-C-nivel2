@@ -239,7 +239,7 @@ namespace Negocio
                     aux.CodArt = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
-                    aux.Precio = (decimal)datos.Lector["Precios"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
 
                     if (!(datos.Lector["ImagenUrl"] is DBNull))
                         aux.Imagen = (string)datos.Lector["ImagenUrl"];
